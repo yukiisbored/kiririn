@@ -4,6 +4,9 @@ language: python
 python:
   - 3.4
 
+cache:
+  pip: true
+
 install:
   - pip install coala-bears
 
