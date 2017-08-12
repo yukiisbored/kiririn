@@ -32,6 +32,15 @@ def get_newest_model(model_dir):
     return os.path.join(model_dir, models[0])
 
 
+def get_model(rasa_section):
+    model = get_newest_model(rasa_section['models'])
+
+    if 'model' in rasa_section:
+        model = rasa_section['model']
+
+    return model
+
+
 def parse(text, model, config, metadata=None, interpreter=None):
     if metadata is None:
         metadata = rm.Metadata.load(model)

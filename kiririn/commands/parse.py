@@ -2,7 +2,7 @@ import logging
 
 import click
 
-from kiririn.rasa import get_newest_model, parse
+from kiririn.rasa import get_model, parse
 
 logger = logging.getLogger(__name__)
 
@@ -15,9 +15,6 @@ def cli(ctx, text):
     rasa_section = ctx.obj['rasa']
 
     config = rasa_section['config']
-    model = get_newest_model(rasa_section['models'])
-
-    if 'model' in rasa_section:
-        model = rasa_section['model']
+    model = get_model(rasa_section)
 
     logger.info(parse(text, model, config))
