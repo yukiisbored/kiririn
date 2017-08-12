@@ -1,23 +1,10 @@
 import logging
-import os
 
 import click
-from rasa_nlu.config import RasaNLUConfig
-from rasa_nlu.model import Metadata, Interpreter
+
+from kiririn.rasa import get_newest_model, parse
 
 logger = logging.getLogger(__name__)
-
-
-def get_newest_model(model_dir):
-    models = os.listdir(model_dir)
-    models.sort(reverse=True)
-
-    model = models[0]
-
-    if not model.startswith('model_'):
-        raise 'No models found, Please train first to generate models'
-
-    return os.path.join(model_dir, models[0])
 
 
 @click.command('parse',
@@ -27,13 +14,10 @@ def get_newest_model(model_dir):
 def cli(ctx, text):
     rasa_section = ctx.obj['rasa']
 
+    config = rasa_section['config']
     model = get_newest_model(rasa_section['models'])
 
     if 'model' in rasa_section:
         model = rasa_section['model']
 
-    metadata = Metadata.load(model)
-    interpreter = Interpreter.load(metadata,
-                                   RasaNLUConfig(rasa_section['config']))
-
-    logger.info(interpreter.parse(text))
+    logger.info(parse(text, model, config))
