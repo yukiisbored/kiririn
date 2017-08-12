@@ -30,7 +30,7 @@ def cli(ctx, text):
     model = get_newest_model(rasa_section['models'])
 
     if 'model' in rasa_section:
-        model = rasa_section
+        model = rasa_section['model']
 
     metadata = Metadata.load(model)
     interpreter = Interpreter.load(metadata,
