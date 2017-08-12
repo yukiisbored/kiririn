@@ -1,0 +1,18 @@
+[all]
+bears = SpaceConsistencyBear, QuotesBear
+language = Python
+preferred_quotation = '
+files = **.py
+max_line_length = 80
+use_spaces = True
+
+[all.py]
+bears = PEP8Bear, PycodestyleBear
+
+[all.linelength]
+bears = LineLengthBear
+
+[commit]
+bears = GitCommitBear
+shotlog_trailing_period = False
+shotlog_regex = ([^:]*|[^:]+[^ ]: [A-Z0-9*].*)

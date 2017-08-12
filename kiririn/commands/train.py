@@ -19,7 +19,7 @@ def train(data, config, models):
                help='run trainer and generate models')
 @click.pass_context
 def cli(ctx):
-    logger.info("Training data")
+    logger.info('Training data')
     rasa.nlu.model.logger = logger
     rasa_section = ctx.obj['rasa']
     return train(rasa_section['data'], rasa_section['config'],
