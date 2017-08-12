@@ -20,3 +20,4 @@ MANIFEST
 *.exe
 *.jar
 .vendor
+.\#*
