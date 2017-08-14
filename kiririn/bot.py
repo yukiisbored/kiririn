@@ -1,28 +1,21 @@
 import logging
+import time
 
 from rasa_nlu.config import RasaNLUConfig
 from rasa_nlu.model import Metadata, Interpreter
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from kiririn.rasa import get_model, train
 
+from telepot import Bot
+from telepot.loop import MessageLoop
+
 logger = logging.getLogger(__name__)
 
-metadata = None
+bot = None
 interpreter = None
 
-
-def start(bot, update):
+def handle(msg):
     pass
-
-
-def do(bot, update):
-    pass
-
-
-def error(bot, update, error):
-    logger.warn('Update "%s" caused error "%s"'.format(update, error))
-
 
 def start_bot(config):
     rasa_section = config['rasa']
@@ -36,23 +29,19 @@ def start_bot(config):
     logger.info('Loading interpreter')
 
     config = rasa_section['config']
+
+    global interpreter
     interpreter = Interpreter.load(metadata,
                                    RasaNLUConfig(config))
 
     logger.info('Preparing Bot')
 
-    updater = Updater(telegram_section['token'])
-    dp = updater.dispatcher
+    global bot
+    bot = Bot(telegram_section['token'])
 
-    dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(MessageHandler(Filters.text, do))
+    MessageLoop(bot, handle).run_as_thread()
 
-    dp.add_error_handler(error)
+    logger.info('Listening')
 
-    logger.info('Starting Bot')
-
-    updater.start_polling()
-
-    logger.info('Bot started, Gonna idle')
-
-    updater.idle()
+    while 1:
+        time.sleep(10)

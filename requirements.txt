@@ -1,4 +1,4 @@
 rasa-nlu~=0.9.1
-python_telegram_bot~=7.0.1
+telepot~=12.2
 click~=6.6
 click-log~=0.1.8
