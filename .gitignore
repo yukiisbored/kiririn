@@ -21,3 +21,4 @@ MANIFEST
 *.jar
 .vendor
 .\#*
+config.ini
