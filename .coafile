@@ -7,7 +7,11 @@ max_line_length = 80
 use_spaces = True
 
 [all.py]
-bears = PEP8Bear, PycodestyleBear
+bears = PEP8Bear
+default_action: PEP8Bear: ShowPatchAction
+
+[all.pycodestyle]
+bears = PycodestyleBear
 
 [all.linelength]
 bears = LineLengthBear
